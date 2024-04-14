@@ -1,0 +1,189 @@
+description: 8 bit pipelined CPU
+general:
+  address_size: 16
+  endian: little
+  registers:
+    - a
+    - b
+    - c
+    - d
+    - tl
+    - th
+    - si
+    - di
+    - tx
+    - pc
+    - ra
+    - sp
+  origin: 0
+  identifier:
+    name: pipelined-cpu-asm
+    version: "0.1.0"
+    extension: asm
+  min_version: 0.3.0
+
+operand_sets:
+  8_bit_source:
+    operand_values:
+      a_reg:
+        type: register
+        register: a
+        bytecode: 
+          value: 1
+          size: 3
+      b_reg:
+        type: register
+        register: b
+        bytecode: 
+          value: 2
+          size: 3
+      c_reg:
+        type: register
+        register: c
+        bytecode: 
+          value: 3
+          size: 3
+      d_reg:
+        type: register
+        register: d
+        bytecode: 
+          value: 4
+          size: 3
+  8_bit_gpr:
+    operand_values:
+      a_reg:
+        type: register
+        register: a
+        bytecode: 
+          value: 0
+          size: 2
+      b_reg:
+        type: register
+        register: b
+        bytecode: 
+          value: 1
+          size: 2
+      c_reg:
+        type: register
+        register: c
+        bytecode: 
+          value: 2
+          size: 2
+      d_reg:
+        type: register
+        register: d
+        bytecode: 
+          value: 3
+          size: 2
+
+  uint8_no_bytecode:
+    operand_values:
+      uint8:
+        type: numeric
+        argument:
+          size: 8
+          byte_align: true
+
+instructions:
+  nop:
+    bytecode:
+      value: 0
+      size: 8
+  # Constant loads
+  mvi:
+    bytecode:
+      value: 1
+      size: 5
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - 8_bit_source
+          - uint8_no_bytecode
+  # register to register transfer
+  mov:
+    bytecode:
+      value: 1
+      size: 2
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - 8_bit_source
+          - 8_bit_source
+  add:
+    bytecode:
+      value: 1
+      size: 4
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - 8_bit_gpr
+          - 8_bit_gpr
+  sub:
+    bytecode:
+      value: 2
+      size: 4
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - 8_bit_gpr
+          - 8_bit_gpr
+  inc:
+    bytecode:
+      value: 1
+      size: 6
+    operands:
+      count: 1
+      operand_sets:
+        list:
+          - 8_bit_gpr
+  dec:
+    bytecode:
+      value: 12
+      size: 6
+    operands:
+      count: 1
+      operand_sets:
+        list:
+          - 8_bit_gpr
+  cmp:
+    bytecode:
+      value: 8
+      size: 4
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - 8_bit_gpr
+          - 8_bit_gpr
+  shl:
+    bytecode:
+      value: 32
+      size: 6
+    operands:
+      count: 1
+      operand_sets:
+        list:
+          - 8_bit_gpr
+  shr:
+    bytecode:
+      value: 33
+      size: 6
+    operands:
+      count: 1
+      operand_sets:
+        list:
+          - 8_bit_gpr
+  and:
+    bytecode:
+      value: 9
+      size: 4
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - 8_bit_gpr
+          - 8_bit_gpr

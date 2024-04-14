@@ -1,0 +1,138 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun Apr 14 11:35:27 2024
+[*]
+[dumpfile] "D:\Users\Marcel\OneDrive\02_Dokumente\Programmierung\Verilog\PipelinedCPU\dump.vcd"
+[dumpfile_mtime] "Sun Apr 14 11:27:55 2024"
+[dumpfile_size] 20734
+[savefile] "D:\Users\Marcel\OneDrive\02_Dokumente\Programmierung\Verilog\PipelinedCPU\tb_cpu.gtkw"
+[timestart] 29500
+[size] 1970 1091
+[pos] -1 -1
+*-13.214318 44230 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_cpu.
+[treeopen] tb_cpu.DUT.
+[sst_width] 197
+[signals_width] 253
+[sst_expanded] 1
+[sst_vpaned_height] 689
+@28
+[color] 2
+tb_cpu.DUT.clk
+@800200
+-BUS
+@22
+[color] 3
+tb_cpu.DUT.BUS_Addr[15:0]
+[color] 3
+tb_cpu.DUT.BUS_Main[7:0]
+[color] 3
+tb_cpu.DUT.BUS_Memory[7:0]
+[color] 3
+tb_cpu.DUT.BUS_LHS[7:0]
+[color] 3
+tb_cpu.DUT.BUS_RHS[7:0]
+@100002028
+[color] 3
+^1 D:\Users\Marcel\OneDrive\02_Dokumente\Programmierung\Verilog\PipelinedCPU\main_assert.gtkw
+tb_cpu.DUT.MainBusAssert[3:0]
+[color] 3
+^1 D:\Users\Marcel\OneDrive\02_Dokumente\Programmierung\Verilog\PipelinedCPU\main_assert.gtkw
+tb_cpu.DUT.MainBusLoad[3:0]
+@1000200
+-BUS
+@800200
+-Pipeline
+@c00022
+[color] 2
++{IR Pipe 0} tb_cpu.DUT.pipe0Out_pipeline[7:0]
+@28
+(0)tb_cpu.DUT.pipe0Out_pipeline[7:0]
+(1)tb_cpu.DUT.pipe0Out_pipeline[7:0]
+(2)tb_cpu.DUT.pipe0Out_pipeline[7:0]
+(3)tb_cpu.DUT.pipe0Out_pipeline[7:0]
+(4)tb_cpu.DUT.pipe0Out_pipeline[7:0]
+(5)tb_cpu.DUT.pipe0Out_pipeline[7:0]
+(6)tb_cpu.DUT.pipe0Out_pipeline[7:0]
+(7)tb_cpu.DUT.pipe0Out_pipeline[7:0]
+@1401200
+-group_end
+@c00022
+[color] 4
++{IR Pipe 1} tb_cpu.DUT.pipe1Out_pipeline[7:0]
+@28
+(0)tb_cpu.DUT.pipe1Out_pipeline[7:0]
+(1)tb_cpu.DUT.pipe1Out_pipeline[7:0]
+(2)tb_cpu.DUT.pipe1Out_pipeline[7:0]
+(3)tb_cpu.DUT.pipe1Out_pipeline[7:0]
+(4)tb_cpu.DUT.pipe1Out_pipeline[7:0]
+(5)tb_cpu.DUT.pipe1Out_pipeline[7:0]
+(6)tb_cpu.DUT.pipe1Out_pipeline[7:0]
+(7)tb_cpu.DUT.pipe1Out_pipeline[7:0]
+@1401200
+-group_end
+@22
+[color] 6
++{IR Pipe 2} tb_cpu.DUT.pipe2Out_pipeline[7:0]
+@1000200
+-Pipeline
+@800200
+-Registers
+@22
+[color] 7
++{PCRA0} tb_cpu.DUT.PCRA0.data[15:0]
+[color] 7
++{Reg Const} tb_cpu.DUT.Const.data[7:0]
+[color] 7
++{Reg A} tb_cpu.DUT.A.data[7:0]
+[color] 7
++{Reg B} tb_cpu.DUT.B.data[7:0]
+@1000200
+-Registers
+@800200
+-ALU
+@100002028
+^2 D:\Users\Marcel\OneDrive\02_Dokumente\Programmierung\Verilog\PipelinedCPU\carry_select.gtkw
+tb_cpu.DUT.stage1.out_carry[1:0]
+^3 D:\Users\Marcel\OneDrive\02_Dokumente\Programmierung\Verilog\PipelinedCPU\logic_select.gtkw
+tb_cpu.DUT.stage1.out_logic[2:0]
+@2028
+^4 D:\Users\Marcel\OneDrive\02_Dokumente\Programmierung\Verilog\PipelinedCPU\shift_select.gtkw
+tb_cpu.DUT.stage1.out_shift[1:0]
+@22
+[color] 6
++{Shift LHS} tb_cpu.DUT.shift.data[7:0]
+[color] 6
++{Logic RHS} tb_cpu.DUT.logic_rhs.data[7:0]
+@23
+[color] 5
+tb_cpu.DUT.adder.Lhs[7:0]
+[color] 5
+tb_cpu.DUT.adder.Rhs[7:0]
+@22
+[color] 6
++{Adder} tb_cpu.DUT.adder.data[8:0]
+@1000200
+-ALU
+@800200
+-Flags
+@28
+[color] 7
+tb_cpu.DUT.flags_0_overflow
+[color] 7
+tb_cpu.DUT.flags_1_sign
+[color] 7
+tb_cpu.DUT.flags_2_zero
+[color] 7
+tb_cpu.DUT.flags_3_carryA
+[color] 7
+tb_cpu.DUT.flags_4_carryL
+[color] 7
+tb_cpu.DUT.flags_6_reset
+@1000200
+-Flags
+@200
+-
+-
+[pattern_trace] 1
+[pattern_trace] 0
