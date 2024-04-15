@@ -1,0 +1,317 @@
+description: 8 bit pipelined CPU
+general:
+  address_size: 16
+  endian: big
+  registers:
+    - a
+    - b
+    - c
+    - d
+    - si
+    - di
+    - pc
+    - ra
+    - sp
+  origin: 0
+  identifier:
+    name: pipelined-cpu-asm
+    version: "0.1.0"
+    extension: asm
+  min_version: 0.3.0
+
+operand_sets:
+  gpr:
+    operand_values:
+      a_reg:
+        type: register
+        register: a
+        bytecode: 
+          value: 1
+          size: 3
+      b_reg:
+        type: register
+        register: b
+        bytecode: 
+          value: 2
+          size: 3
+      c_reg:
+        type: register
+        register: c
+        bytecode: 
+          value: 3
+          size: 3
+      d_reg:
+        type: register
+        register: d
+        bytecode: 
+          value: 4
+          size: 3
+
+  addr_registers:
+    operand_values:
+      si_reg:
+        type: register
+        register: si
+        bytecode:
+          value: 1
+          size: 3
+      di_reg:
+        type: register
+        register: di
+        bytecode:
+          value: 2
+          size: 3
+      ra_reg:
+        type: register
+        register: ra
+        bytecode:
+          value: 4
+          size: 3
+      sp_reg:
+        type: register
+        register: sp
+        bytecode:
+          value: 5
+          size: 3
+
+  uint16_no_bytecode:
+    operand_values:
+      uint16:
+        type: numeric
+        argument:
+          size: 16
+          byte_align: true
+
+instructions:
+  # 000 000 000 0000000
+  nop:
+    bytecode:
+      value: 0
+      size: 16
+  # 001 000 000 0000000
+  hlt:
+    bytecode:
+      value: 8192
+      size: 16
+  # Constant loads
+  mvi:
+    variants:
+      # const -> gpr
+      # 000 ddd 000 0000010
+      - bytecode:
+          value: 0
+          size: 3
+          suffix:
+            value: 2
+            size: 10
+        operands:
+          count: 2
+          operand_sets:
+            list:
+              - gpr
+              - uint16_no_bytecode
+      # const -> addr
+      # 001 ddd 000 0000010
+      - bytecode:
+          value: 1
+          size: 3
+          suffix:
+            value: 2
+            size: 10
+        operands:
+          count: 2
+          operand_sets:
+            list:
+              - addr_registers
+              - uint16_no_bytecode
+  # register to register transfer
+  mov:
+    variants:
+      # gpr <-> gpr
+      # 000 ddd sss 0000001
+      - bytecode:
+          value: 0
+          size: 3
+          suffix:
+            value: 1
+            size: 7
+        operands:
+          count: 2
+          operand_sets:
+            list:
+              - gpr
+              - gpr
+      # addr <-> addr
+      # 001 ddd sss 0000001
+      - bytecode:
+          value: 1
+          size: 3
+          suffix:
+            value: 1
+            size: 7
+        operands:
+          count: 2
+          operand_sets:
+            list:
+              - addr_registers
+              - addr_registers
+      # addr <- gpr
+      # 010 ddd sss 0000001
+      - bytecode:
+          value: 2
+          size: 3
+          suffix:
+            value: 1
+            size: 7
+        operands:
+          count: 2
+          operand_sets:
+            list:
+              - addr_registers
+              - gpr
+      # gpr <- addr
+      # 011 ddd sss 0000001
+      - bytecode:
+          value: 3
+          size: 3
+          suffix:
+            value: 1
+            size: 7
+        operands:
+          count: 2
+          operand_sets:
+            list:
+              - gpr
+              - addr_registers
+  # 000 ddd sss 1100000
+  add:
+    bytecode:
+      value: 0
+      size: 3
+      suffix:
+        value: 96
+        size: 7
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - gpr
+          - gpr
+  # 000 ddd sss 1100001
+  sub:
+    bytecode:
+      value: 0
+      size: 3
+      suffix:
+        value: 97
+        size: 7
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - gpr
+          - gpr
+  # 000 ddd 000 1100010
+  inc:
+    variants:
+      - bytecode:
+          value: 0
+          size: 3
+          suffix:
+            value: 98
+            size: 10
+        operands:
+          count: 1
+          operand_sets:
+            list:
+              - gpr
+      - bytecode:
+          value: 0
+          size: 3
+          suffix:
+            value: 4
+            size: 10
+        operands:
+          count: 1
+          operand_sets:
+            list:
+              - addr_registers
+  # 000 ddd 000 1100011
+  dec:
+    variants:
+      - bytecode:
+          value: 0
+          size: 3
+          suffix:
+            value: 99
+            size: 10
+        operands:
+          count: 1
+          operand_sets:
+            list:
+              - gpr
+      - bytecode:
+          value: 0
+          size: 3
+          suffix:
+            value: 5
+            size: 10
+        operands:
+          count: 1
+          operand_sets:
+            list:
+              - addr_registers
+  # 000 sss sss 0000011
+  cmp:
+    bytecode:
+      value: 0
+      size: 3
+      suffix: 
+        value: 3
+        size: 7
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - gpr
+          - gpr
+  # 000 ddd 000 1100100
+  shl:
+    bytecode:
+      value: 0
+      size: 3
+      suffix:
+        value: 100
+        size: 10
+    operands:
+      count: 1
+      operand_sets:
+        list:
+          - gpr
+  # 000 ddd 000 1100101
+  shr:
+    bytecode:
+      value: 0
+      size: 3
+      suffix:
+        value: 101
+        size: 10
+    operands:
+      count: 1
+      operand_sets:
+        list:
+          - gpr
+  # 000 ddd sss 1100110
+  and:
+    bytecode:
+      value: 0
+      size: 3
+      suffix:
+        value: 102
+        size: 7
+    operands:
+      count: 2
+      operand_sets:
+        list:
+          - gpr
+          - gpr

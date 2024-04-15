@@ -1,11 +1,14 @@
 module flags
+#(
+    parameter DATA_WIDTH = 16
+)
 (
     input clk,
     input arithCarryIn,
     input logicCarryIn,
-    input [7:0] DataIn,
-    input [7:0] LhsIn,
-    input [7:0] RhsIn,
+    input [DATA_WIDTH-1:0] DataIn,
+    input [DATA_WIDTH-1:0] LhsIn,
+    input [DATA_WIDTH-1:0] RhsIn,
     input [1:0] CarrySelect,
 
     output reg arithCarry,
@@ -27,8 +30,8 @@ end
 
 always @(posedge clk) begin
     CarrySelectDelayed <= CarrySelect;
-    overflow <= ((LhsIn[7] ^ DataIn[7]) & (DataIn[7] ^ RhsIn[7]));
-    sign <= DataIn[7];
+    overflow <= ((LhsIn[DATA_WIDTH] ^ DataIn[DATA_WIDTH]) & (DataIn[DATA_WIDTH] ^ RhsIn[DATA_WIDTH]));
+    sign <= DataIn[DATA_WIDTH];
     arithCarry <= arithCarryIn;
     logicCarry <= logicCarryIn;
 

@@ -1,18 +1,21 @@
 module r8b_gpr
+#(
+    parameter WIDTH = 16
+)
 (
     input clk,
     input reg_load,
     input reg_write,
-    input [7:0] RegIn,
+    input [WIDTH-1:0] RegIn,
     input assert_LHS,
     input assert_RHS,
 
-    output [7:0] RegOut,
-    output [7:0] LhsOut,
-    output [7:0] RhsOut
+    output [WIDTH-1:0] RegOut,
+    output [WIDTH-1:0] LhsOut,
+    output [WIDTH-1:0] RhsOut
 );
 
-reg [7:0] data;
+reg [WIDTH-1:0] data;
 
 initial
     data <= 0;
@@ -20,7 +23,6 @@ initial
 always @(negedge clk) begin
     if (reg_load)
         data <= RegIn;
-
 end
 
 assign RegOut = reg_write ? data : 'bZ;

@@ -15,10 +15,13 @@
 
 
 module cpu
+#(
+    parameter ADDR_WIDTH = 16,
+    parameter DATA_WIDTH = 16
+)
 (
     input clk,
     input resetIn
-
 );
 
 wire flags_0_overflow;
@@ -28,28 +31,28 @@ wire flags_3_carryA;
 wire flags_4_carryL;
 wire flags_6_reset;
 
-wire [7:0] BUS_Memory;
-wire [7:0] BUS_Main;
-wire [15:0] BUS_Addr;
-wire [7:0] BUS_LHS;
-wire [7:0] BUS_RHS;
-wire [7:0] Alu_LHS;
-wire [7:0] Alu_RHS;
-wire [7:0] Data;
+wire [DATA_WIDTH-1:0] BUS_Memory;
+wire [DATA_WIDTH-1:0] BUS_Main;
+wire [ADDR_WIDTH-1:0] BUS_Addr;
+wire [DATA_WIDTH-1:0] BUS_LHS;
+wire [DATA_WIDTH-1:0] BUS_RHS;
+wire [DATA_WIDTH-1:0] Alu_LHS;
+wire [DATA_WIDTH-1:0] Alu_RHS;
+wire [DATA_WIDTH-1:0] Data;
 
-wire [7:0] pipe0Out_pipeline;
+wire [DATA_WIDTH-1:0] pipe0Out_pipeline;
 wire pipe0Out_0_inc_PCRA0;
 wire pipe0Out_1_inc_PCRA1;
 
 
-wire [7:0] pipe1Out_pipeline;
+wire [DATA_WIDTH-1:0] pipe1Out_pipeline;
 wire [1:0] pipe1Out_lhs;
 wire [1:0] pipe1Out_rhs;
 wire [1:0] pipe1Out_shift;
 wire [2:0] pipe1Out_logic;
 wire pipe1Out_15_FetchSuppress;
 
-wire [7:0] pipe2Out_pipeline;
+wire [DATA_WIDTH-1:0] pipe2Out_pipeline;
 wire [3:0] MainBusAssert;
 wire [3:0] MainBusLoad;
 

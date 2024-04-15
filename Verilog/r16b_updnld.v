@@ -3,6 +3,9 @@
 // Hardware implementation would be a 74xx193
 
 module r16b_updnld
+#(
+    parameter WIDTH = 16
+)
 (
     input clk,
     input clr,
@@ -10,23 +13,23 @@ module r16b_updnld
     input reg_write,
     input inc,
     input dec,
-    input [15:0] XferBusIn,
+    input [WIDTH-1:0] XferBusIn,
 
-    output [15:0] Out
+    output [WIDTH-1:0] Out
 );
 
-    reg [15:0] data;
+    reg [WIDTH-1:0] data;
 
     initial
         data <= 0;
 
     always @(clr)
         if (clr)
-            data <= 16'b0; 
+            data <= 'b0; 
 
     always @(negedge clk) 
         if (clr)
-            data <= 16'b0; 
+            data <= 'b0; 
         else if (reg_load)
             data <= XferBusIn;
         else if (inc)
@@ -36,5 +39,4 @@ module r16b_updnld
 
     assign Out = reg_write ? data : 'bZ;
         
-
 endmodule

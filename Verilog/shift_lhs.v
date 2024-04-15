@@ -1,15 +1,18 @@
 module shift_lhs
+#(
+    parameter DATA_WIDTH = 16
+)
 (
     input clk,
     input [1:0] op,
     input carryIn,
-    input [7:0] LhsIn,
+    input [DATA_WIDTH-1:0] LhsIn,
 
     output carryOut,
-    output [7:0] LhsOut
+    output [DATA_WIDTH-1:0] LhsOut
 );
 
-reg [7:0] data;
+reg [DATA_WIDTH-1:0] data;
 reg carry;
 
 initial begin
@@ -21,9 +24,9 @@ always @(posedge clk) begin
     case (op)
         0: data <= LhsIn;
         0: carry <= 'b0;
-        1: data <= {LhsIn[6:0], carryIn};
-        1: carry <= LhsIn[7];
-        2: data <= {carryIn, LhsIn[7:1]};
+        1: data <= {LhsIn[DATA_WIDTH-2:0], carryIn};
+        1: carry <= LhsIn[DATA_WIDTH-1];
+        2: data <= {carryIn, LhsIn[DATA_WIDTH-1:1]};
         2: carry <= LhsIn[0];
         3: data <= 'b0;
         3: carry <= 'b0;

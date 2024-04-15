@@ -1,18 +1,21 @@
 module pipe_stage0
+#(
+    parameter DATA_WIDTH = 16
+)
 (
     input clk,
-    input [7:0] PipeIn,
+    input [DATA_WIDTH-1:0] PipeIn,
     input busRequest,
     input fetchSuppress,
     input flag5_PCRA_flip,
     
-    output [7:0] PipeOut,
+    output [DATA_WIDTH-1:0] PipeOut,
     output out0_incPCRA0,
     output out1_incPCRA1
 
 );
 
-reg [7:0] PipeLatch;
+reg [DATA_WIDTH-1:0] PipeLatch;
 
 initial
     PipeLatch <= 'b0;

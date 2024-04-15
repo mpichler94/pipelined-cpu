@@ -1,19 +1,24 @@
 module memory
+#(
+    parameter ADDR_WIDTH = 16,
+    parameter DATA_WIDTH = 16
+)
 (
     input clk,
-    input [15:0] Addr,
-    input [7:0] MainBusIn,
+    input [ADDR_WIDTH-1:0] Addr,
+    input [DATA_WIDTH-1:0] MainBusIn,
     input dir,
     input load,
     input mem_assert,
 
-    output [7:0] MemDataOut,
-    output [7:0] MainBusOut
+    output [DATA_WIDTH-1:0] MemDataOut,
+    output [DATA_WIDTH-1:0] MainBusOut
 );
 
-reg [7:0] RAM [65535:0];
+//reg [DATA_WIDTH-1:0] RAM [65535:0];
+reg [DATA_WIDTH-1:0] RAM [(1<<ADDR_WIDTH)-1:0];
 
-reg [7:0] dout;
+reg [DATA_WIDTH-1:0] dout;
 
 initial
     dout <= 0;
@@ -24,10 +29,12 @@ assign MainBusOut = mem_assert ? dout : 'bZ;
 
 always @(posedge clk) begin
     if (load) begin
-        RAM[Addr] <= MainBusIn;
+        RAM[Addr] <= MainBusIn[DATA_WIDTH-1+:8];
+        RAM[Addr + 1] <= MainBusIn[DATA_WIDTH-9+:8];
         dout <= MainBusIn;
     end else
-        dout <= RAM[Addr];
+        dout[15:8] <= RAM[Addr];
+        dout[7:0] <= RAM[Addr+1];
 end
 
 endmodule
